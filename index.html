@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>GraphC</title>
+
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./main.css">
+
+    <script src="//code.jquery.com/jquery-latest.js"></script>
+    <script src="http://d3js.org/d3.v2.min.js"></script>
+    <script src="./main.js"></script>
+  </head>
+  <body>
+    <div class="body">
+      <div class="content">
+        <div class="sidebar">
+          <form>
+            <div class="input-prepend input-append">
+              <span class="add-on">Має бути</span>
+              <input class="input-small countOfVertices" id="appendedPrependedInput" placeholder="від 1 до 25" type="text">
+              <span class="add-on">вершин графа!</span>
+            </div>
+            <legend>Матриця суміжностей</legend>
+            <table class="tableForMatrix"></table>
+          </form>
+        </div>
+        <div class="gallery" id="chart"></div>
+      </div>
+    </div>
+  </body>
+</html>

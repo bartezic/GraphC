@@ -1,0 +1,51 @@
+circle.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+line.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
+.content{
+  width: 1350px;
+  margin: 20px;
+}
+td{
+  border: 1px solid #345;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  background-color: #ddd;
+}
+.checked{
+  background-color: greenyellow;
+}
+.uncheckeble{
+  background-color: red;
+}
+.sidebar{
+  text-align: center;
+  float: left;
+  position: static;
+  padding: 10px;
+  width: 605px;
+  height: 650px;
+  border-radius: 8px;
+  box-shadow: 0 0 12px #4EDB47;
+}
+form {
+  margin: 0 !important;
+}
+.countOfVertices{
+  height: 30px !important;
+}
+.gallery{
+  float: right;
+  position: static;
+  background-color: #333;
+  box-shadow: 0 0 12px #4EDB47;
+  border-radius: 8px;
+  width: 670px;
+  height: 670px;
+}
