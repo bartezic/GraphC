@@ -119,16 +119,29 @@ function buildJson(){
 };
 
 function colorizing(a){
+  
   // this function finds the unprocessed vertex of which degree is maximum
   var MaxDegreeVertex = function(){
     var max = -1;
     var max_i;
     for (var i =0; i<a.length; i++){
-      if (color[i] === 0){
-        if (degree[i]>max){
-          max = degree[i];
-          max_i = i;
-        }
+      if ((color[i] === 0) && (degree[i]>max)){
+        max = degree[i];
+        max_i = i;
+      }
+    }
+    return max_i;
+  };
+
+  // find the vertex in NN of which degree is maximum
+  var MaxDegreeInNN = function(){
+    var max = -1;
+    var max_i, i;
+    for (var k=0; k<NN.length; k++){
+      i = NN[k];
+      if ((color[i] === 0) && (degree[i]>max)){
+        max = degree[i];
+        max_i = i;
       }
     }
     return max_i;
@@ -136,37 +149,34 @@ function colorizing(a){
 
   // this function updates NN array
   var UpdateNN = function(ColorNumber){
-    NNCount = 0;
+    NN = [];
     for (var i=0; i<a.length; i++){
       if (color[i] === 0){
-        NN[NNCount] = i;
-        NNCount ++;
+        NN.push(i);
       }
     }
     for (var i=0; i<a.length; i++){
       if (color[i] === ColorNumber){
-        for (var j=0; j<NNCount; j++){
+        for (var j=0; j<NN.length; j++){
           while (a[i][NN[j]] === 1){
-            NN[j] = NN[NNCount - 1];
-            NNCount --;
+            NN.splice(j,1)
           }
         }
       }
     }
   };
+
   // this function will find suitable y from NN
   var FindSuitableY = function(ColorNumber,VerticesInCommon){
-    var temp,tmp_y,y = 0,ColorNumber;
-    var scanned = new Array(a.length);
+    var temp,tmp_y,y=0;
+    var scanned = [];
     VerticesInCommon = 0;
-    for (var i=0; i<NNCount; i++) {
+    for (var i=0; i<NN.length; i++) {
       tmp_y = NN[i];
       temp = 0;
-      // this function is for UpdateNN function
-      // it reset the value of scanned array
-      // for (var i=0; i<a.length; i++){
-      //   scanned[i] = 0;
-      // };
+      for (var f=0; f<a.length; f++){
+        scanned[f] = 0;
+      }
       for (var x=0; x<a.length; x++){
         if (color[x] === ColorNumber){
           for (var k=0; k<a.length; k++){
@@ -186,36 +196,10 @@ function colorizing(a){
     }
     return [y,VerticesInCommon];
   };
-  // find the vertex in NN of which degree is maximum
-  var MaxDegreeInNN = function(){
-    var tmp_y = 0;
-    var temp, max = 0;
-    for (var i=0; i<NNCount; i++){
-      temp = 0;
-      for (var j=0; j<a.length; j++){
-        if (color[NN[j]] === 0 && a[i][NN[j]] === 1){
-          temp ++;
-        }
-      }
-      if (temp>max){
-        max = temp;
-        tmp_y = NN[i];
-      }
-    }
-    return tmp_y;
-  };
-  // print out the output
-  var PrintOutput = function(){
-    for (var i=0; i<a.length; i++){
-      console.log("Vertex " + (i+1) + " is colored " + color[i]);
-    }
-  };
 
-  //console.log(a)
   var color = [];
   var degree = [];
   var NN = [];
-  var NNCount = 0;
 
   for (var i=0; i<a.length; i++){
     color[i] = 0;
@@ -234,11 +218,10 @@ function colorizing(a){
   var unprocessed = a.length;
   while (unprocessed>0){
     x = MaxDegreeVertex();
-    ColorNumber ++;
-    color[x] = ColorNumber;
+    color[x] = ++ColorNumber;
     unprocessed --;
     UpdateNN(ColorNumber);
-    while (NNCount>0){
+    while (NN.length>0){
       result = FindSuitableY(ColorNumber, VerticesInCommon);
       y = result[0];
       VerticesInCommon = result[1];
@@ -250,7 +233,6 @@ function colorizing(a){
       UpdateNN(ColorNumber);
     }
   }
-  PrintOutput();
   return color
 };
 
